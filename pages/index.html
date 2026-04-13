@@ -14,14 +14,14 @@
             input {
                 background-color:azure;
                 width: 100%;
-                height: 55%;
+                padding: 10px;
                 border: none;
                 outline: none;
             }
             button {
                 background-color: beige;
                 width: 100%;
-                height: 55%;
+                padding: 10px;
                 border: none;
             }
             button:hover {
@@ -80,6 +80,8 @@
                     };
 
                     p.appendChild(delBtn);
+                    p.appendChild(document.createElement('br'));
+                    p.appendChild(document.createElement('br'));
                     p.appendChild(updBtn);
 
                     parent.appendChild(p);
