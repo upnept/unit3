@@ -28,7 +28,8 @@
                 background-color: #f5e6c8;
             }
             #aptList p {
-                color: rgba(43, 41, 41, 0.4);
+                color: rgba(0, 0, 0, 0.4);
+                font-weight: bold
             }
             .info {
                 color: white;
@@ -49,7 +50,7 @@
         </form>
         
         <h3>Current Appointments</h3>
-        <p class="info">Name     Date    Time    Reason</p>
+        <p class="info">Name  |   Date  |  Time  |  Reason</p>
         <div id="aptList"></div>
 
         <script>
@@ -73,7 +74,7 @@
                     };
 
                     let updBtn = document.createElement('button');
-                    updBtn.innerText = "  Update  ";
+                    updBtn.innerText = "  Update Time ";
                     updBtn.onclick = async () => {
                         let newTime = prompt("Update time");
                         await fetch('/update?name=' + item.name + '&time=' + newTime);
