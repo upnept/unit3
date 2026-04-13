@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Appointment Lister</title>
+
+        <style>
+            body {
+                background-color: burlywood;
+                color: black;
+                font-size: large;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            input {
+                background-color:azure
+            }
+            button {
+                background-color: beige;
+            }
+            .info {
+                color: white;
+                font-size:x-large
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>Create a appointment</h2>
+        <form method="POST" action="/add">
+            <input name="name" placeholder="Name"><br><br>
+            <input name="date" placeholder="Date"><br><br>
+            <input name="time" placeholder="Time"><br><br>
+            <input name="reason" placeholder="Reason"><br><br>
+
+            <button type="submit">Add</button><br><br>
+        </form>
+        
+        <p class="info">Name     Date    Time    Reason</p>
+        <div id="aptList"></div>
+
+        <script>
+            async function loadAppointments() {
+                let res = await fetch('/api');
+                let items = await res.json();
+
+                let parent = document.getElementById('aptList');
+
+                parent.innerHTML = "";
+
+                items.forEach(item => {
+                    let p = document.createElement('p');
+                    p.innerText = item.name + " | " + item.date + " | " + item.time + " | " + item.reason + "  ";
+
+                    let delBtn = document.createElement('button');
+                    delBtn.innerText = "  Delete  ";
+                    delBtn.onclick = async () => {
+                        await fetch('/delete?name=' + item.name);
+                        loadAppointments();
+                    };
+
+                    let updBtn = document.createElement('button');
+                    updBtn.innerText = "  Update  ";
+                    updBtn.onclick = async () => {
+                        let newTime = prompt("Update time");
+                        await fetch('/update?name=' + item.name + '&time=' + newTime);
+                        loadAppointments();
+                    };
+
+                    p.appendChild(delBtn);
+                    p.appendChild(updBtn);
+
+                    parent.appendChild(p);
+                });
+            }
+
+            loadAppointments();
+        </script>
+    </body>
+</html>
